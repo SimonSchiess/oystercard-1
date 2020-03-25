@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 class Oystercard
-  attr_reader :balance
+  attr_reader :balance, :entry_station
   CARD_LIMIT = 90
   MINIMUM_FUNDS = 1
   AMOUNT = 1
 
   def initialize(balance = 0)
     @balance = 0
-    @journey = false
   end
 
   def top_up(amount)
@@ -16,24 +15,26 @@ class Oystercard
     @balance = amount
   end
 
-  def touch_in
+  def touch_in(tube_station)
     raise "insufficient balance" if @balance < MINIMUM_FUNDS
-    journey_in?('yes')
+    @entry_station = tube_station
   end
 
-  def journey_in?(confirm)
-    if confirm == 'yes'
-      @journey = true
-    else 
-      @journey = false
+  def journey_in?
+    if @entry_station == nil
+      false
+    else
+      true
     end
   end
 
   def touch_out
-    journey_in?('no')
     deduct(AMOUNT)
     # is assuming amount does not change
+    @entry_station = nil
   end
+
+ 
 
  private
 
