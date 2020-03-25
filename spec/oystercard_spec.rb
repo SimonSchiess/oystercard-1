@@ -30,48 +30,37 @@ describe Oystercard do
     it 'can top up the balance' do
       subject.top_up(20)
       expect { subject.deduct(1) }.to change{ subject.balance }.by (-1)
-       what about if it goes under 0
+      what about if it goes under 0
     end
   end
 =end
 
-context '#touch_in' do 
+  context '#touch_in' do 
     it 'start journey' do
-    expect(card).to respond_to(:touch_in)
-    #expect(card).to be_journey_in("yes")
-    card.top_up(1)
-    card.touch_in("Embankment")
-    expect(card.journey_in?).to eql true
-  end
+      expect(card).to respond_to(:touch_in)
+      #expect(card).to be_journey_in("yes")
+      card.top_up(1)
+      card.touch_in("Embankment")
+      expect(card.journey_in?).to eql true
+    end
 
     it 'will not allow card to touch in  and will throw an error  if have less than one pound in balance' do
-    expect {card.touch_in("Embankment")}.to raise_error "insufficient balance"
-  end 
+      expect {card.touch_in("Embankment")}.to raise_error "insufficient balance"
+    end 
 
 
     it 'will register the station we are at' do
       subject.top_up(5)
       subject.touch_in('Embankment')
-expect(subject.entry_station).to eq 'Embankment'
+      expect(subject.entry_station).to eq 'Embankment'
     end
 
     it 'will register the station we are at' do
       subject.top_up(5)
       subject.touch_in('Kings Cross')
-expect(subject.entry_station).to eq 'Kings Cross'
+      expect(subject.entry_station).to eq 'Kings Cross'
     end
-end
-
-=begin
-it "raises an error if it exceeds maximum capacity (default 20)" do
-  20.times { docking_station.dock_bikes(Bike.new) }
-  expect { docking_station.dock_bikes(daisy) }.to raise_error "Dock at maximum capacity"
-end
-end
-=end
-
-
-
+  end
 
   context '#touch_out' do 
     it 'ends journey' do
@@ -84,15 +73,26 @@ end
     end 
 
     #expect { subject.deduct(1) }.to change{ subject.balance }.by (-1)
-      # what about if it goes under 0
+    # what about if it goes under 0
 
-      it ' entry_station will be nil' do
+    it ' entry_station will be nil' do
       subject.top_up(5)
       subject.touch_in("Embankment")
       subject.touch_out
       expect(subject.entry_station).to eql nil
-      end
-  end 
+    end
+  end
+
+  context '#journey_history' do 
+
+    it 'returns last journey: going from kings cross to embankment' do
+      subject.top_up(5)
+      subject.touch_in('Kings Cross')
+      subject.touch_out('Embankment')
+      expect(subject.journey_history).to eq entry: 'Kings Cross', exit: 'Embankment'
+    end
+
+  end
 end
 
 #Write a test that checks that an error is thrown if 
