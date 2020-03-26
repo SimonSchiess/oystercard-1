@@ -11,7 +11,7 @@ describe Oystercard do
     it 'oystercard responds to method top_up' do
       expect(card).to respond_to(:top_up).with(1).argument
     end
-  
+
     it 'can top up the balance' do
       expect{ subject.top_up 1 }.to change{ subject.balance }.by 1
     end
@@ -19,7 +19,7 @@ describe Oystercard do
     it '#top_up fails if over balance' do
       expect{ card.top_up(95) }.to raise_error "Over limit"
     end
-  end  
+  end
 
 =begin
   context '#deduct' do
@@ -35,7 +35,7 @@ describe Oystercard do
   end
 =end
 
-  context '#touch_in' do 
+  context '#touch_in' do
     it 'start journey' do
       expect(card).to respond_to(:touch_in)
       #expect(card).to be_journey_in("yes")
@@ -46,7 +46,7 @@ describe Oystercard do
 
     it 'will not allow card to touch in  and will throw an error  if have less than one pound in balance' do
       expect {card.touch_in("Embankment")}.to raise_error "insufficient balance"
-    end 
+    end
 
 
     it 'will register the station we are at' do
@@ -62,15 +62,15 @@ describe Oystercard do
     end
   end
 
-  context '#touch_out' do 
+  context '#touch_out' do
     it 'ends journey' do
     expect(card).to respond_to(:touch_out)
     expect(card).to_not be_journey_in
-    end 
+    end
 
     it 'deduct money from balance' do
       expect{card.touch_out}.to change{ subject.balance }.by (-1)
-    end 
+    end
 
     #expect { subject.deduct(1) }.to change{ subject.balance }.by (-1)
     # what about if it goes under 0
@@ -83,7 +83,7 @@ describe Oystercard do
     end
   end
 
-  context '#journey_history' do 
+  context '#journey_history' do
 
     it 'returns last journey: going from kings cross to embankment' do
       subject.top_up(5)
@@ -91,9 +91,8 @@ describe Oystercard do
       subject.touch_out('Embankment')
       expect(subject.journey_history).to eq entry: 'Kings Cross', exit: 'Embankment'
     end
-
   end
 end
 
-#Write a test that checks that an error is thrown if 
+#Write a test that checks that an error is thrown if
 #a card with insufficient balance is touched in
