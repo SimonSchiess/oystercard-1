@@ -32,6 +32,10 @@ class Oystercard
   def touch_out(tube_station)
     deduct(AMOUNT)
     # is assuming amount does not change
+    this_journey = Hash.new
+    this_journey[:entry] = @entry_station
+    this_journey[:exit] = tube_station
+    @journey_history.push(this_journey)
     @entry_station = nil
   end
 

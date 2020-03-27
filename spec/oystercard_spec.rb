@@ -89,7 +89,13 @@ describe Oystercard do
       subject.top_up(5)
       subject.touch_in('Kings Cross')
       subject.touch_out('Embankment')
-      expect(subject.journey_history).to eq entry: 'Kings Cross', exit: 'Embankment'
+      expect(subject.journey_history[-1][:entry]).to eq 'Kings Cross'
+    end
+    it 'should remember the exit station of the journey' do
+      subject.top_up(5)
+      subject.touch_in('Kings Cross')
+      subject.touch_out('Embankment')
+      expect(subject.journey_history[-1][:exit]).to eq 'Embankment'
     end
   end
 end
