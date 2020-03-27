@@ -64,12 +64,12 @@ describe Oystercard do
 
   context '#touch_out' do
     it 'ends journey' do
-    expect(card).to respond_to(:touch_out)
+    expect(card).to respond_to(:touch_out).with(1).argument
     expect(card).to_not be_journey_in
     end
 
     it 'deduct money from balance' do
-      expect{card.touch_out}.to change{ subject.balance }.by (-1)
+      expect{card.touch_out('Kings Cross')}.to change{ subject.balance }.by (-1)
     end
 
     #expect { subject.deduct(1) }.to change{ subject.balance }.by (-1)
@@ -78,7 +78,7 @@ describe Oystercard do
     it ' entry_station will be nil' do
       subject.top_up(5)
       subject.touch_in("Embankment")
-      subject.touch_out
+      subject.touch_out('Kings Cross')
       expect(subject.entry_station).to eql nil
     end
   end

@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class Oystercard
-  attr_reader :balance, :entry_station
+  attr_reader :balance, :entry_station, :journey_history
   CARD_LIMIT = 90
   MINIMUM_FUNDS = 1
   AMOUNT = 1
 
   def initialize(balance = 0)
     @balance = 0
+    @journey_history = []
   end
 
   def top_up(amount)
@@ -28,7 +29,7 @@ class Oystercard
     end
   end
 
-  def touch_out
+  def touch_out(tube_station)
     deduct(AMOUNT)
     # is assuming amount does not change
     @entry_station = nil
