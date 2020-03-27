@@ -94,5 +94,5 @@ describe Oystercard do
   end
 end
 
-#Write a test that checks that an error is thrown if
+#Write a test that checks that an error is thrown if sdasd
 #a card with insufficient balance is touched in
