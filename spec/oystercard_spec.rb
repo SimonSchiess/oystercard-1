@@ -97,6 +97,9 @@ describe Oystercard do
       subject.touch_out('Embankment')
       expect(subject.journey_history[-1][:exit]).to eq 'Embankment'
     end
+    it 'should have an empty list of journeys by default' do
+    expect(subject.journey_history).to eq []
+    end
   end
 end
 

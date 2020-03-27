@@ -22,24 +22,24 @@ class Oystercard
   end
 
   def journey_in?
-    if @entry_station == nil
-      false
-    else
-      true
-    end
+    @entry_station != nil 
   end
 
   def touch_out(tube_station)
     deduct(AMOUNT)
     # is assuming amount does not change
+    update_journey(tube_station)
+  end
+
+  private
+
+  def update_journey(tube_station)
     this_journey = Hash.new
     this_journey[:entry] = @entry_station
     this_journey[:exit] = tube_station
     @journey_history.push(this_journey)
     @entry_station = nil
   end
-
-  private
 
   def deduct(amount)
     @balance -= amount
